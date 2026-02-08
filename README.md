@@ -1,5 +1,7 @@
 # SpringBoot work
 
+[![Maven Package](https://github.com/pbharambe/springboot-work/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/pbharambe/springboot-work/actions/workflows/maven-publish.yml)
+
 
 ## Swagger API details
 
