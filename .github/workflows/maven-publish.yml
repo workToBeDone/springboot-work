@@ -28,53 +28,53 @@ jobs:
           echo "Branch details --" ${GITHUB_REF}
           mvn -B clean package --file pom.xml
 
-      - name: Sonar Scan
-        uses: SonarSource/sonarcloud-github-action@v3
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=com.techlearning:demoApp
-            -Dsonar.organization=worktobedone
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-
-      - name: Fetch Sonar Coverage
-        id: sonar
-        run: |
-          RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
-            "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=coverage,lines_to_cover,uncovered_lines")
-          
-          COVERAGE=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="coverage") | .value')
-          LINES=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="lines_to_cover") | .value')
-          UNCOVERED=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="uncovered_lines") | .value')
-          
-          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
-          echo "lines=$LINES" >> $GITHUB_OUTPUT
-          echo "uncovered=$UNCOVERED" >> $GITHUB_OUTPUT 
-
-      - name: Sonar Coverage Summary
-        run: |
-          echo "## 📊 Sonar Code Coverage" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Coverage | **${{ steps.sonar.outputs.coverage }}%** |" >> $GITHUB_STEP_SUMMARY
-          echo "| Lines to cover | ${{ steps.sonar.outputs.lines }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Uncovered lines | ${{ steps.sonar.outputs.uncovered }} |" >> $GITHUB_STEP_SUMMARY
-
-      - name: Coverage Badge
-        run: |
-          COV=${{ steps.sonar.outputs.coverage }}
-          if (( $(echo "$COV >= 80" | bc -l) )); then
-            ICON="🟢"
-          elif (( $(echo "$COV >= 60" | bc -l) )); then
-            ICON="🟡"
-          else
-            ICON="🔴"
-          fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Coverage Status:** $ICON $COV%" >> $GITHUB_STEP_SUMMARY
+#      - name: Sonar Scan
+#        uses: SonarSource/sonarcloud-github-action@v3
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        with:
+#          args: >
+#            -Dsonar.projectKey=com.techlearning:demoApp
+#            -Dsonar.organization=worktobedone
+#            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+#
+#      - name: Fetch Sonar Coverage
+#        id: sonar
+#        run: |
+#          RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+#            "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=coverage,lines_to_cover,uncovered_lines")
+#
+#          COVERAGE=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="coverage") | .value')
+#          LINES=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="lines_to_cover") | .value')
+#          UNCOVERED=$(echo $RESPONSE | jq -r '.component.measures[] | select(.metric=="uncovered_lines") | .value')
+#
+#          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+#          echo "lines=$LINES" >> $GITHUB_OUTPUT
+#          echo "uncovered=$UNCOVERED" >> $GITHUB_OUTPUT
+#
+#      - name: Sonar Coverage Summary
+#        run: |
+#          echo "## 📊 Sonar Code Coverage" >> $GITHUB_STEP_SUMMARY
+#          echo "" >> $GITHUB_STEP_SUMMARY
+#          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+#          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+#          echo "| Coverage | **${{ steps.sonar.outputs.coverage }}%** |" >> $GITHUB_STEP_SUMMARY
+#          echo "| Lines to cover | ${{ steps.sonar.outputs.lines }} |" >> $GITHUB_STEP_SUMMARY
+#          echo "| Uncovered lines | ${{ steps.sonar.outputs.uncovered }} |" >> $GITHUB_STEP_SUMMARY
+#
+#      - name: Coverage Badge
+#        run: |
+#          COV=${{ steps.sonar.outputs.coverage }}
+#          if (( $(echo "$COV >= 80" | bc -l) )); then
+#            ICON="🟢"
+#          elif (( $(echo "$COV >= 60" | bc -l) )); then
+#            ICON="🟡"
+#          else
+#            ICON="🔴"
+#          fi
+#
+#          echo "" >> $GITHUB_STEP_SUMMARY
+#          echo "**Coverage Status:** $ICON $COV%" >> $GITHUB_STEP_SUMMARY
 
 #      - name: Publish to GitHub Packages Apache Maven
 #        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
