@@ -40,7 +40,7 @@ jobs:
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml            
 
       - name: Sonar Coverage details
-        id: sonar
+        id: sonarCoverage
         run: |
           RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
             "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=\
