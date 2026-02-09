@@ -37,6 +37,14 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ../springboot-work/target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+
+        <sonar.host.url>https://sonarcloud.io/</sonar.host.url>
+        <sonar.organization>worktobedone</sonar.organization>
+        <sonar.login>6540c5e837f6a3bc35cfc6fc0e91085c2db47083</sonar.login>
+
         <resilience4j.version>2.3.0</resilience4j.version>
     </properties>
 
@@ -206,6 +214,17 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <formats>
+                                <format>XML</format>
+                            </formats>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>verify-report</id>
