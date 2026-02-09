@@ -39,7 +39,36 @@ jobs:
             -Dsonar.java.binaries=target/classes
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml            
 
-      - name: Fetch Sonar Coverage
+      - name: Sonar Coverage details
+        id: sonar
+        run: |
+          RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+            "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=\
+              coverage,reliability_rating,security_rating,sqale_rating,duplicated_lines_density,bugs,vulnerabilities,code_smells,security_hotspots")
+
+          COVERAGE=$(jq -r '.component.measures[] | select(.metric=="coverage") | .value' <<< "$RESPONSE")
+          RELIABILITY=$(jq -r '.component.measures[] | select(.metric=="reliability_rating") | .value' <<< "$RESPONSE")
+          SECURITY=$(jq -r '.component.measures[] | select(.metric=="security_rating") | .value' <<< "$RESPONSE")
+          MAINT=$(jq -r '.component.measures[] | select(.metric=="sqale_rating") | .value' <<< "$RESPONSE")
+          DUPLICATION=$(jq -r '.component.measures[] | select(.metric=="duplicated_lines_density") | .value' <<< "$RESPONSE")
+  
+          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+          echo "lines=$LINES" >> $GITHUB_OUTPUT
+          echo "uncovered=$UNCOVERED" >> $GITHUB_OUTPUT
+
+      - name: Sonar Quality Report
+        run: |
+          echo "## 🧪 Sonar Quality Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Coverage | ${COVERAGE}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| Reliability | ${RELIABILITY} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | ${SECURITY} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Maintainability | ${MAINT} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Duplication | ${DUPLICATION}% |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Sonar Coverage details
         id: sonar
         run: |
           RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
