@@ -36,7 +36,8 @@ jobs:
           args: >
             -Dsonar.projectKey=com.techlearning:demoApp
             -Dsonar.organization=worktobedone
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml            
 
       - name: Fetch Sonar Coverage
         id: sonar
