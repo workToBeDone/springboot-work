@@ -43,8 +43,7 @@ jobs:
         id: sonarCoverage
         run: |
           RESPONSE=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
-            "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=\
-              coverage,reliability_rating,security_rating,sqale_rating,duplicated_lines_density,bugs,vulnerabilities,code_smells,security_hotspots")
+            "https://sonarcloud.io/api/measures/component?component=com.techlearning:demoApp&metricKeys=coverage,reliability_rating,security_rating,sqale_rating,duplicated_lines_density,bugs,vulnerabilities,code_smells,security_hotspots")
 
           COVERAGE=$(jq -r '.component.measures[] | select(.metric=="coverage") | .value' <<< "$RESPONSE")
           RELIABILITY=$(jq -r '.component.measures[] | select(.metric=="reliability_rating") | .value' <<< "$RESPONSE")
