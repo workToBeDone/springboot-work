@@ -53,6 +53,71 @@ To enable Quartz Scheduler include this spring dependency --
 ```
 
 ----
+# Performance Testing
+- ## Gatling Tests
+
+To enable Gatling Tests include this spring dependency --
+```xml
+    <dependency>
+        <groupId>io.gatling</groupId>
+        <artifactId>gatling-app</artifactId>
+        <version>3.9.0</version>
+        <scope>test</scope>
+    </dependency>
+```
+```xml
+            <!-- Gatling Maven Plugin for Performance Testing -->
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>4.20.16</version>
+                <configuration>
+                    <!-- Run specific test -->
+                    <!--<simulationClass>com.techlearning.performance.StressTest</simulationClass>-->
+                    <!--<simulationClass>com.techlearning.performance.BasicLoadTest</simulationClass>-->
+                    <!-- OR let it auto-discover -->
+                    <runMultipleSimulations>true</runMultipleSimulations>
+
+                    <failOnError>true</failOnError>
+                </configuration>
+            </plugin>
+```
+
+To run the tests, first start the application ``mvn spring-boot:run`` then use the command: ``mvn gatling:test``. This will execute all simulations in the src/test/ directory.
+
+Test Scenarios:
+- Basic Load Test - Ramp up to 50 users over 30 seconds
+- Stress Test - 100+ concurrent users
+- Spike Test - Sudden burst of 200 users
+- Endurance Test - Sustained load over 10 minutes
+
+Reports:
+Gatling generates HTML reports in ``target/gatling/`` with:
+- Response time distribution
+- Requests per second
+- Success/failure rates
+- Detailed metrics and charts
+
+
+- ## Simple Performance Tests
+JUnit-based performance tests for quick validation.
+
+Run Simple Performance Tests:
+```bash
+mvn test -Dtest=VersionApiPerformanceSimpleTest
+```
+
+Test Scenarios:
+- Load test with 100 concurrent requests
+- Response time validation (average < 500ms)
+- Stress test with 500 requests
+- Spike test with sudden burst
+
+Key Metrics:
+- Average response time
+- Throughput (requests/second)
+- Success rate percentage
+- Min/Max response times
 
 
 

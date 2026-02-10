@@ -46,6 +46,7 @@
         <sonar.login>6540c5e837f6a3bc35cfc6fc0e91085c2db47083</sonar.login>
 
         <resilience4j.version>2.3.0</resilience4j.version>
+        <gatling.version>3.14.9</gatling.version>
     </properties>
 
     <dependencies>
@@ -145,7 +146,13 @@
             <artifactId>spring-boot-starter-quartz-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- Performance Testing with Gatling -->
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>${gatling.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -289,6 +296,21 @@
                     <targetTests>
                         <param>com.techlearning.*</param>
                     </targetTests>
+                </configuration>
+            </plugin>
+            <!-- Gatling Maven Plugin for Performance Testing -->
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>4.20.16</version>
+                <configuration>
+                    <!-- Run specific test -->
+                    <!--<simulationClass>com.techlearning.performance.StressTest</simulationClass>-->
+                    <!--<simulationClass>com.techlearning.performance.BasicLoadTest</simulationClass>-->
+                    <!-- OR let it auto-discover -->
+                    <runMultipleSimulations>true</runMultipleSimulations>
+
+                    <failOnError>true</failOnError>
                 </configuration>
             </plugin>
         </plugins>
