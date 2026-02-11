@@ -54,6 +54,10 @@ jobs:
           echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
           echo "lines=$LINES" >> $GITHUB_OUTPUT
           echo "uncovered=$UNCOVERED" >> $GITHUB_OUTPUT
+          echo "reliability=$RELIABILITY" >> $GITHUB_OUTPUT
+          echo "security=$SECURITY" >> $GITHUB_OUTPUT
+          echo "maint=$MAINT" >> $GITHUB_OUTPUT
+          echo "duplication=$DUPLICATION" >> $GITHUB_OUTPUT
 
       - name: Sonar Quality Report
         run: |
@@ -61,11 +65,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Coverage | ${COVERAGE}% |" >> $GITHUB_STEP_SUMMARY
-          echo "| Reliability | ${RELIABILITY} (A=1) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Security | ${SECURITY} (A=1) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Maintainability | ${MAINT} (A=1) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Duplication | ${DUPLICATION}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| Coverage | ${{ steps.sonarCoverage.outputs.coverage }}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| Reliability | ${{ steps.sonarCoverage.outputs.reliability }} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | ${{ steps.sonarCoverage.outputs.security }} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Maintainability | ${{ steps.sonarCoverage.outputs.maint }} (A=1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Duplication | ${{ steps.sonarCoverage.outputs.duplication }}% |" >> $GITHUB_STEP_SUMMARY
 
       - name: Sonar Coverage details
         id: sonar
