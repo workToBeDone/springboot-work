@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @DisplayName("Version API Integration Tests with TestContainers")
-class VersionApiIntegrationTest {
+class VersionApiIntegration {
 
     @LocalServerPort
     private int port;

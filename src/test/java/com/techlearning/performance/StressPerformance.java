@@ -17,7 +17,7 @@ import static io.gatling.javaapi.http.HttpDsl.status;
  * Stress Test - Tests application under high load
  * Run with: mvn gatling:test -Dgatling.simulationClass=com.techlearning.performance.StressTest
  */
-public class StressTest extends Simulation {
+public class StressPerformance extends Simulation {
 
     // HTTP Protocol Configuration
     HttpProtocolBuilder httpProtocol = http

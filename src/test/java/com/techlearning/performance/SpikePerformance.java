@@ -12,7 +12,7 @@ import static io.gatling.javaapi.http.HttpDsl.*;
  * Spike Test - Tests application response to sudden traffic spikes
  * Run with: mvn gatling:test -Dgatling.simulationClass=com.techlearning.performance.SpikeTest
  */
-public class SpikeTest extends Simulation {
+public class SpikePerformance extends Simulation {
 
     // HTTP Protocol Configuration
     HttpProtocolBuilder httpProtocol = http

@@ -14,7 +14,7 @@ import static io.gatling.javaapi.http.HttpDsl.*;
  *
  * WARNING: This test runs for 10+ minutes. Use for final validation only.
  */
-public class EnduranceTest extends Simulation {
+public class EndurancePerformance extends Simulation {
 
     // HTTP Protocol Configuration
     HttpProtocolBuilder httpProtocol = http

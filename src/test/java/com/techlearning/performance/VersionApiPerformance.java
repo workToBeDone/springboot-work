@@ -15,7 +15,7 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class VersionApiPerformanceTest extends Simulation {
+public class VersionApiPerformance extends Simulation {
 
     // HTTP Protocol Configuration
     HttpProtocolBuilder httpProtocol = http

@@ -12,7 +12,7 @@ import static io.gatling.javaapi.http.HttpDsl.*;
  * Basic Load Test - Tests normal application load
  * Run with: mvn gatling:test -Dgatling.simulationClass=com.techlearning.performance.BasicLoadTest
  */
-public class BasicLoadTest extends Simulation {
+public class BasicLoadPerformance extends Simulation {
 
     // HTTP Protocol Configuration
     HttpProtocolBuilder httpProtocol = http

@@ -73,8 +73,8 @@ To enable Gatling Tests include this spring dependency --
                 <version>4.20.16</version>
                 <configuration>
                     <!-- Run specific test -->
-                    <!--<simulationClass>com.techlearning.performance.StressTest</simulationClass>-->
-                    <!--<simulationClass>com.techlearning.performance.BasicLoadTest</simulationClass>-->
+                    <!--<simulationClass>com.techlearning.performance.StressPerformance</simulationClass>-->
+                    <!--<simulationClass>com.techlearning.performance.BasicLoadPerformance</simulationClass>-->
                     <!-- OR let it auto-discover -->
                     <runMultipleSimulations>true</runMultipleSimulations>
 
